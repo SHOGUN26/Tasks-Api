@@ -1,0 +1,36 @@
+info:
+  name: Remove Task
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: "{{base_url}}/tasks/{{taskId}}"
+  headers:
+    - name: Authorization
+      value: Bearer {{token}}
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status 200", function () {
+          expect(res.getStatus(), JSON.stringify(res.getBody())).to.equal(200);
+        });
+
+        test("La tâche supprimée est renvoyée", function () {
+          const idDansUrl = req.getUrl().split("?")[0].split("/").pop();
+          expect(String(res.getBody().id)).to.equal(String(idDansUrl));
+        });
+
+        test("Appartient au bon utilisateur", function () {
+          expect(String(res.getBody().userId)).to.equal(String(bru.getEnvVar("userId")));
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

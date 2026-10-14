@@ -1,0 +1,20 @@
+name: local
+variables:
+  - name: userId
+    value: "6"
+  - name: token
+    value: nTm1temxOan06pU5e5YAnOashFqdMhfj
+  - name: email
+    value: test@test.com
+  - name: password
+    value: "1111111111"
+  - name: name
+    value: Jolyne
+  - name: TaskId
+    value:
+      type: number
+      data: "4"
+  - name: taskId
+    value:
+      type: number
+      data: "17"

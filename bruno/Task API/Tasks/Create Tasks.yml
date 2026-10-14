@@ -1,0 +1,47 @@
+info:
+  name: Create Tasks
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{base_url}}/tasks"
+  headers:
+    - name: Authorization
+      value: ""
+  body:
+    type: json
+    data: |2-
+       {
+           "title": "Lire un livre",
+          "description": "Lire un chapitre avant de dormir",
+          "priority": "low"
+        }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: bru.setEnvVar("taskId", res.getBody().id);
+    - type: tests
+      code: |-
+        test("Status 201", function () {
+          expect(res.getStatus()).to.equal(201);
+        });
+
+        test("Tâche ajoutée avec succès", function () {
+          const body = res.getBody();
+          expect(body.title).to.be.a("string").and.not.empty;
+          expect(body.priority).to.be.oneOf(["low", "medium", "high"]);
+        });
+
+        test("Appartient à l'utilisateur connecté", function () {
+          expect(String(res.getBody().userId)).to.equal(String(bru.getEnvVar("userId")));
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

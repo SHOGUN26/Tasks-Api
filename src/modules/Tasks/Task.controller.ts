@@ -17,14 +17,14 @@ export class TaskController{
         return this.tasksService.findAll(Number(session.user.id), query)
     }
 
-    @Get(':id/completed')
-    completed(@Param('id', ParseIntPipe) id:number, @Session() session:UserSession){
-        return this.tasksService.completed(Number(session.user.id), id)
+    @Patch(':id/complete')
+    complete(@Param('id', ParseIntPipe) id: number, @Session() session: UserSession) {
+    return this.tasksService.completed(Number(session.user.id), id);
     }
 
 
 
-    @Get('id')
+    @Get(':id')
     findOne(@Param('id', ParseIntPipe) id:number, @Session() session:UserSession){
         return this.tasksService.findOne(Number(session.user.id), id)
     }
@@ -34,12 +34,12 @@ export class TaskController{
         return this.tasksService.create(Number(session.user.id), dto)
     }
 
-    @Patch('id')
+    @Patch(':id')
     update(@Param('id', ParseIntPipe) id:number,@Body() dto: UpdateTaskDto, @Session() session: UserSession ){
         return this.tasksService.update(Number(session.user.id),id , dto)
     }
 
-    @Delete('id')
+    @Delete(':id')
     remove(@Param('id', ParseIntPipe) id:number, @Session() session:UserSession ){
         return this.tasksService.remove(Number(session.user.id), id)
     }
