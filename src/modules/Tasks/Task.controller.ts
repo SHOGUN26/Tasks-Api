@@ -1,26 +1,29 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Session } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Session, UseGuards } from "@nestjs/common";
 import { type UserSession } from "@thallesp/nestjs-better-auth";
 import { CreateTaskDto } from './dto/create-task.dto.js';
 import { TaskService } from './Task.service.js';
 import { UpdateTaskDto } from "./dto/update-task.dto.js";
 import { ListTaskQueryDto } from "./dto/list-task.dto.js";
+import { authGuard } from './../../common/guards/auth.guard.js';
 
 
 
-
+@UseGuards(authGuard)
 @Controller("tasks")
 export class TaskController{
     constructor(private readonly tasksService :TaskService){}
 
+
+    
     @Get()
     findAll(@Query() query:ListTaskQueryDto, @Session() session:UserSession){
         return this.tasksService.findAll(Number(session.user.id), query)
     }
 
-    @Patch(':id/complete')
-    complete(@Param('id', ParseIntPipe) id: number, @Session() session: UserSession) {
-    return this.tasksService.completed(Number(session.user.id), id);
-    }
+    // @Patch(':id/complete')
+    // complete(@Param('id', ParseIntPipe) id: number, @Session() session: UserSession) {
+    // return this.tasksService.completed(Number(session.user.id), id);
+    // }
 
 
 

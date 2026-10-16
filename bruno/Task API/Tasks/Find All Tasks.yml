@@ -5,17 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{base_url}}/tasks?completed=false&priority=high"
+  url: "{{base_url}}/tasks"
   headers:
     - name: Authorization
       value: Bearer {{token}}
-  params:
-    - name: completed
-      value: "false"
-      type: query
-    - name: priority
-      value: high
-      type: query
   auth: inherit
 
 runtime:

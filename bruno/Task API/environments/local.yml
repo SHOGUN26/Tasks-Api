@@ -3,7 +3,7 @@ variables:
   - name: userId
     value: "6"
   - name: token
-    value: nTm1temxOan06pU5e5YAnOashFqdMhfj
+    value: 5ooV1VjqiSEEjTOVFOAnoSwCSzaxwwKK
   - name: email
     value: test@test.com
   - name: password
@@ -14,7 +14,3 @@ variables:
     value:
       type: number
       data: "4"
-  - name: taskId
-    value:
-      type: number
-      data: "17"
